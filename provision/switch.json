@@ -1,0 +1,88 @@
+{
+"_comment": "connect to Joyent-SDC-Public network (423...) so packer can SSH into it",
+
+"builders": [{
+    "name": "gregzuro_greg1.triton.joyent.us-west-1.dev.switch",
+    "type": "triton",
+    "triton_url": "https://us-west-1.api.joyentcloud.com",
+    "triton_account": "gregzuro_greg1",
+    "triton_key_id": "29:29:e2:d5:29:75:0e:b7:d4:53:f3:05:d7:67:2a:12",
+    "triton_key_material": "/Users/gregz/.ssh/joyent2_id_rsa",
+    "source_machine_package": "g4-highcpu-512M",
+    "source_machine_image": "212c8962-ec06-11e6-8cee-5b0a09ebef00",
+    "ssh_username": "root",
+    "ssh_private_key_file": "/Users/gregz/.ssh/joyent2_id_rsa",
+    "image_name": "switch",
+    "image_version": "{{isotime \"060102030405\"}}",
+    "source_machine_networks": ["42325ea0-eb62-44c1-8eb6-0af3e2f83abc"],
+    "source_machine_name": "image-builder"
+    },
+    {
+    "name": "gregzuro_gsg1.triton.joyent.ftg-1.dev.switch",
+    "type": "triton",
+    "triton_url": "https://ftg-1.api.dev.gregzuro.io",
+    "triton_account": "gsg1",
+    "triton_key_id": "21:e7:ca:47:c7:af:72:c4:f5:c3:c3:19:db:42:d6:3a",
+    "triton_key_material": "/Users/gregz/.ssh/id_rsa",
+    "source_machine_package": "sdc_512",
+    "source_machine_image": "212c8962-ec06-11e6-8cee-5b0a09ebef00",
+    "ssh_username": "root",
+    "ssh_private_key_file": "/Users/gregz/.ssh/id_rsa",
+    "image_name": "switch",
+    "image_version": "{{isotime \"060102030405\"}}",
+    "source_machine_networks": ["9fa0f33c-4cdc-41be-860f-7231a4d110ac"],
+    "source_machine_name": "image-builder"
+    }], 
+
+     "provisioners": [
+        {
+        "type": "shell",
+        "inline": [
+            "mkdir -p /srv/configs/master",
+            "mkdir -p /srv/configs/slave",
+            "mkdir -p /srv/configs/device",
+            "mkdir -p /srv/ui",
+            "mkdir -p /srv/third_party"
+            ]
+        },
+        {
+        "type": "file",
+        "source": "../switch/cmd/master/configs/",
+        "destination": "/srv/configs/master/"
+        },
+        {
+        "type": "file",
+        "source": "../switch/cmd/slave/configs/",
+        "destination": "/srv/configs/slave/"
+        },
+        {
+        "type": "file",
+        "source": "../switch/cmd/device/configs/",
+        "destination": "/srv/configs/device/"
+        },
+        {
+        "type": "file",
+        "source": "../switch/ui/",
+        "destination": "/srv/ui/"
+        },
+        {
+        "type": "file",
+        "source": "../switch/build/linux_amd64/switch",
+        "destination": "/srv/"
+        },
+        {
+        "type": "file",
+        "source": "../switch/third_party/",
+        "destination": "/srv/third_party/"
+        }
+
+    ],
+
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "manifest.json",
+      "strip_path": true
+    }
+  ]
+}

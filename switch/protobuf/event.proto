@@ -1,0 +1,91 @@
+syntax = "proto3";  
+package locationeventspb; 
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.gregzuro.service.protobuf";
+option java_outer_classname = "Switch";
+option java_multiple_files = false;
+option java_generate_equals_and_hash = false;
+message UpdateDetails {
+   int32 operationType = 1;
+}
+message BranchElement {
+     string branchName =1;
+     int32 DTElementIndex = 2;   
+     string functionCallName = 3;
+}
+message DecisionElement {
+	repeated string variable = 1;
+	int32 sequence = 2;
+	int64 level = 3;
+  string property = 4; 
+  string operation = 5;    
+  string value = 6;
+	int64 branchID = 7;
+  int32 inbranch = 8;
+  BranchElement TrueBElement = 9;
+  BranchElement FalseBElement = 10;
+}
+message Device {
+  string deviceID = 1;
+  repeated string eventid = 2;
+}
+message EventData {
+  string eventId    = 1;
+  string clientId = 2;
+  string name = 3;
+  string description = 4;
+  google.protobuf.Timestamp endTimestamp = 5; 
+  google.protobuf.Timestamp startTimestamp = 6;
+  repeated DecisionElement decisionElements=7; 
+  repeated string deviceId = 8;
+
+}
+ message Point {
+    double x = 1;
+    double y = 2;
+}
+  message WifiLandmarkDef {
+    string mac  = 1;
+    string ssid = 2;
+    sint32 rssiLow  = 3;
+    sint32 rssiHigh = 4;
+    int32  radioType = 5;
+}
+  message IBeaconLandmarkDef {
+    int32 radioType = 1;
+    string uuid   = 2;
+    int32 major = 3;
+    int32 minor = 4;
+    int32 proximity = 5;
+}  
+message LandmarkData {
+  string poiId    = 1;
+  string clientId = 2;
+  repeated string eventId  = 3;
+  repeated Point polygonPoints = 4;
+  repeated Point polygonHoles  = 5;
+  repeated WifiLandmarkDef wifiInfo = 6;
+  repeated IBeaconLandmarkDef ibeaconInfo = 7;
+}
+
+message LocationData {
+  string deviceID = 1;
+  double latitude = 2 ;
+  double longitude = 3 ;
+  double velocity = 4 ;
+  double course = 5 ;
+  double accuracy = 6 ;
+  Point point = 7 ;
+  repeated WifiLandmarkDef wifiInfo = 8;
+  repeated IBeaconLandmarkDef ibeaconInfo = 9;
+}
+
+service LocationEvent {
+  rpc UpdateLandmark(stream LandmarkData) returns (UpdateDetails) {}
+  rpc UpdateEvent(stream EventData) returns (UpdateDetails) {}
+  rpc UpdateLocation(stream LocationData) returns (UpdateDetails) {}
+}

@@ -1,0 +1,71 @@
+<script type="text/x-template" id="node-summary">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-6 col-md-6" style="margin-bottom:20px">
+			<div class="module">
+				<div class="module-header">
+					<div class="module-label">Node</div>
+					<div class="module-divider"></div>
+				</div>
+				<table class="node-info table table-bordered table-striped">
+					<tbody> 
+						<tr><td class="key">ID</td><td class="value" data-ref="Entity.id"></td></tr>
+						<tr><td class="key">Kind</td><td class="value" data-ref="Entity.kind"></td></tr>
+						<tr><td class="key">Address</td><td class="value">{{ Entity.address }}:{{ Entity.port }}</td></tr>
+						<tr><td class="key">Started At</td><td class="value" data-ref="StartTime" data-func="window.app.printDatetime"></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-6" style="margin-bottom:20px">
+			<div class="module">
+				<div class="module-header">
+					<div class="module-label">Messages</div>
+					<div class="module-divider"></div>
+				</div>
+				<table class="node-info table table-bordered table-striped">
+					<tbody> 
+						<tr><td class="key"># Inbound Msg Batch</td><td class="value editable" data-ref="InboundMessageBatchCount"></td></tr>
+						<tr><td class="key"># Inbound Msg</td><td class="value" data-ref="InboundMessageCount"></td></tr>
+						<tr><td class="key">Msg Batches / sec</td><td class="value" data-ref="MessageBatchesPerSecond"></td></tr>
+						<tr><td class="key">Msg / sec</td><td class="value" data-ref="MessagesPerSecond"></td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-md-6" style="margin-bottom:20px">
+			<div class="module">
+				<div class="module-header">
+					<div class="module-label">Parent</div>
+					<div class="module-divider"></div>
+				</div>
+				<table class="node-info table table-bordered table-striped">
+					<tbody> 
+						<tr><td class="key">ID</td><td class="value editable" data-edit="displayName">{{ Parent.id }}</td></tr>
+						<tr><td class="key">Kind</td><td class="value">{{ Parent.kind }}</td></tr>
+						<tr><td class="key">Address</td><td class="value">{{ Parent.address }}:{{ Parent.port }}</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-6" style="margin-bottom:20px">
+			<div class="module">
+				<div class="module-header">
+					<div class="module-label">Master</div>
+					<div class="module-divider"></div>
+				</div>
+				<table class="node-info table table-bordered table-striped">
+					<tbody> 
+						<tr><td class="key">ID</td><td class="value editable" data-edit="displayName">{{ Master.id }}</td></tr>
+						<tr><td class="key">Kind</td><td class="value">{{ Master.kind }}</td></tr>
+						<tr><td class="key">Address</td><td class="value">{{ Master.Address }}:{{ Master.port }}</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</script>

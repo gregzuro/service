@@ -1,0 +1,197 @@
+hash: 20daecdd81bb7d80de2e31e5a862ee3ef1eea42b90a3aab0efba641edaf73713
+updated: 2017-02-21T10:40:47.355954412-08:00
+imports:
+- name: github.com/akhenakh/regionagogo
+  version: 1040c33f0e2d88ec8e9381e27e4ec0f37b0ad9c8
+- name: github.com/BurntSushi/toml
+  version: f0aeabca5a127c4078abb8c8d64298b147264b55
+- name: github.com/docker/distribution
+  version: 77b9d2997abcded79a5314970fe69a44c93c25fb
+  subpackages:
+  - digest
+  - reference
+- name: github.com/docker/engine-api
+  version: 94a8f8f29307ab291abad6c6f2182d67089aae5d
+  subpackages:
+  - client
+  - client/transport
+  - client/transport/cancellable
+  - types
+  - types/blkiodev
+  - types/container
+  - types/filters
+  - types/mount
+  - types/network
+  - types/reference
+  - types/registry
+  - types/strslice
+  - types/swarm
+  - types/time
+  - types/versions
+- name: github.com/docker/go-connections
+  version: 0bad1a3951398f88ef4dd75fdb42af374430be89
+  subpackages:
+  - nat
+  - sockets
+  - tlsconfig
+- name: github.com/docker/go-units
+  version: eb879ae3e2b84e2a142af415b679ddeda47ec71c
+- name: github.com/fsnotify/fsnotify
+  version: 30411dbcefb7a1da7e84f75530ad3abe4011b4f8
+- name: github.com/golang/geo
+  version: ceb4637fdec99c4ec755429170dd0e9e2cd70604
+  subpackages:
+  - r1
+  - r2
+  - r3
+  - s1
+  - s2
+- name: github.com/golang/glog
+  version: 44145f04b68cf362d9c4df2182967c2275eaefed
+- name: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+  subpackages:
+  - jsonpb
+  - proto
+  - proto-gen-go
+  - protoc-gen-go/descriptor
+  - ptypes/empty
+  - ptypes/timestamp
+- name: github.com/grpc-ecosystem/grpc-gateway
+  version: a8f25bd1ab549f8b87afd48aa9181221e9d439bb
+  subpackages:
+  - runtime
+  - runtime/internal
+  - third_party/googleapis/google/api
+  - utilities
+- name: github.com/hashicorp/hcl
+  version: d7400db7143f8e869812e50a53acd6c8d92af3b8
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/influxdata/influxdb
+  version: ff307047057b7797418998a4ed709b0c0f346324
+  subpackages:
+  - client
+  - client/v2
+  - models
+  - pkg/escape
+- name: github.com/jteeuwen/go-bindata
+  version: bbd0c6e271208dce66d8fda4bc536453cd27fc4a
+- name: github.com/Knetic/govaluate
+  version: 5598166b6fc09f038e53f628eec79f0c004a4299
+- name: github.com/kpawlik/geojson
+  version: 06aeea8c5561aef0aee9ec036a1fd3fb55aea653
+- name: github.com/kubernetes/kubernetes
+  version: 1088221093f7b351e210ced325654b0723dadabc
+  subpackages:
+  - pkg/ui/data/swagger
+- name: github.com/magiconair/properties
+  version: c265cfa48dda6474e208715ca93e987829f572f8
+- name: github.com/Microsoft/go-winio
+  version: ce2922f643c8fd76b46cadc7f404a06282678b34
+- name: github.com/mitchellh/mapstructure
+  version: d2dd0262208475919e1a362f675cfc0e7c10e905
+- name: github.com/opencontainers/runc
+  version: aee3f6ff5a43709354e30b012bd4f7db3fa2ef9d
+  subpackages:
+  - libcontainer/user
+- name: github.com/paulmach/go.geojson
+  version: 16c6a8e9da10025ce1b0c4515298e5bb4289a8c4
+- name: github.com/peterh/liner
+  version: 8975875355a81d612fafb9f5a6037bdcc2d9b073
+- name: github.com/philips/go-bindata-assetfs
+  version: 3dcc96556217539f50599357fb481ac0dc7439b9
+- name: github.com/Sirupsen/logrus
+  version: 4b6ea7319e214d98c938f12692336f7ca9348d6b
+- name: github.com/spf13/cast
+  version: 27b586b42e29bec072fe7379259cc719e1289da6
+- name: github.com/spf13/cobra
+  version: 1238ba19d24b0b9ceee2094e1cb31947d45c3e86
+- name: github.com/spf13/jwalterweatherman
+  version: 33c24e77fb80341fe7130ee7c594256ff08ccc46
+- name: github.com/spf13/pflag
+  version: cb88ea77998c3f024757528e3305022ab50b43be
+- name: github.com/spf13/viper
+  version: c1ccc378a054ea8d4e38d8c67f6938d4760b53dd
+- name: github.com/tidwall/rtree
+  version: d4a8a3d30d5729f85edfba1745241f3a621d0359
+- name: github.com/tidwall/tile38
+  version: 8dc5e96669b52670c470877235dfd54e4ba42df3
+  subpackages:
+  - controller/log
+- name: github.com/Workiva/go-datastructures
+  version: 6e483a429c7b8d45d5487bcad780d0caa3a82146
+  subpackages:
+  - augmentedtree
+  - list
+  - queue
+  - trie/ctrie
+- name: golang.org/x/crypto
+  version: b13fc1fd382d01861b16b2e6474487d3d4d27f20
+  subpackages:
+  - ssh
+  - ssh/terminal
+- name: golang.org/x/mobile
+  version: b8794a2669da6680501f9ebc6c555553dc46b1ee
+  subpackages:
+  - cmb/gomobile
+- name: golang.org/x/net
+  version: 4876518f9e71663000c348837735820161a42df7
+  subpackages:
+  - context
+  - http2
+  - http2/hpack
+  - internal/timeseries
+  - proxy
+  - trace
+- name: golang.org/x/sys
+  version: 833a04a10549a95dc34458c195cbad61bbb6cb4d
+  subpackages:
+  - unix
+  - windows
+- name: google.golang.org/appengine
+  version: 12d5545dc1cfa6047a286d5e853841b6471f4c19
+  subpackages:
+  - datastore
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+- name: google.golang.org/grpc
+  version: 2f8be78a8f6c2e06c80045ffd7a8f601c3ee4550
+  repo: https://github.com/gregzuro/grpc-go
+  subpackages:
+  - codes
+  - credentials
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - stats
+  - tap
+  - transport
+- name: gopkg.in/alexcesaro/quotedprintable.v3
+  version: 2caba252f4dc53eaf6b553000885530023f54623
+- name: gopkg.in/gomail.v2
+  version: 81ebce5c23dfd25c6c67194b37d3dd3f338c98b1
+- name: gopkg.in/vmihailenco/msgpack.v2
+  version: 585b09497e708217121c79a5aa185647b757605a
+  subpackages:
+  - codes
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
+testImports: []

@@ -1,0 +1,71 @@
+{
+	"session": {
+		"map": {
+			"center": {
+				"lat": 30,
+				"lng": 0
+			},
+			"zoom": 2,
+			"minZoom": 2
+		},
+		"locale": {
+			"datetimeFormat": "MM/DD/YY hh:mm:ss A",
+			"timezone": "America/Los_Angeles"
+		}
+	},
+	"endpoints": {
+		"switchesIPAddr": "master.greg1.dev.gregzuro.io",
+		"masterPort": 7467
+	},
+	"build": {
+		"jsSource": "app.js",
+		"tplSource": "app_tpls.html",
+		"rootPath": "",
+		"compiled": false
+	},
+	"thirdpartySources": [
+		"static/js/thirdparty/jquery.min.js",
+		"static/js/thirdparty/jquery-ui.min.js",
+		"static/js/thirdparty/jquery.layout.min.js",
+
+		"static/js/thirdparty/bootstrap.min.js",
+		"static/js/thirdparty/underscore.min.js",
+		"static/js/thirdparty/backbone.min.js",
+
+		"static/js/thirdparty/moment.min.js",
+		"static/js/thirdparty/moment-timezone.min.js",
+
+		"static/js/thirdparty/select2.min.js",
+		"static/js/thirdparty/i18next.min.js",
+		"static/js/thirdparty/jstree.min.js",
+
+		"static/js/thirdparty/fontawesome-markers.min.js",
+		"static/js/thirdparty/gmarker-with-label.min.js",
+
+		"static/js/appIni.js"
+	],
+	"sources": {
+		"static/js/collections/Collections.js": [],
+
+		"static/js/views/AppView.js": [],
+		"static/js/views/LoadingView.js": [],
+		"static/js/views/MapView.js": [],
+		"static/js/views/TreeView.js": [],
+		"static/js/views/ModalView.js": [],
+		"static/js/views/SyncView.js": [],
+		"static/js/views/ErrorView.js": [],
+
+		"static/js/views/node/NodesView.js": [],
+		"static/js/views/node/NodeSummaryView.js": [],
+		"static/js/views/node/NodeListView.js": [],
+
+		"static/js/views/user/SettingsView.js": [],
+		"static/js/views/user/AboutView.js": [],
+
+		"static/js/models/Generic.js": [],
+		"static/js/models/node/Node.js": [],
+		"static/js/collections/Generics.js": ["static/js/models/node/Generic.js"],
+		"static/js/collections/node/Nodes.js": ["static/js/models/node/Node.js"]
+
+	}
+}

@@ -1,0 +1,395 @@
+syntax = "proto3";  
+package protobuf; 
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+option optimize_for = LITE_RUNTIME;
+option java_package = "com.gregzuro.service.protobuf";
+option java_outer_classname = "Switch";
+option java_multiple_files = false;
+option java_generate_equals_and_hash = false;
+
+message Point {
+  double latitude = 1 ;
+  double longitude = 2 ;	
+  S2 s2 = 3 ;  // the point implicitly used is the 'center' of this s2 tile  // TODO(greg) use oneof here?
+}
+
+message S2 {
+  int64 s2 = 1 ;  
+}
+message Rectangle {
+  Point lowerLeft = 1;
+  Point upperRight = 2;
+}
+message Polygon {
+	repeated Point points = 1 ; // --iga / --ega : a list of points // last implicitly connects to first
+}
+
+message Coverer {
+  string entity_id = 1 ;
+  google.protobuf.Timestamp coverer_started_time = 2 ;
+  bool coverer_running = 3 ;
+}
+
+message GeoAffinity {
+  GeoFence geo_fence = 1 ;
+  bool exclude = 2 ; // if true, then *exclude* this area
+  S2 cover = 3 ; // id of the s2 cell that 'covers' this geofence
+  repeated Coverer coverers = 4 ;
+  int32 want_covering = 5 ;
+  string name = 6 ;
+}
+
+message Circle
+ {
+  Point center = 1 ;
+  double radius_in_feet = 2 ;
+}
+
+message GeoFence {
+  Polygon polygon = 1 ;
+  Circle circle = 2 ;
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+	string value = 1;
+}
+
+
+message NeedsRequest {}
+
+message NeedStatus {
+  int32 have = 1;
+  int32 need = 2;
+}
+
+message NeedsResponse {
+	map<string, NeedStatus> need_status = 1;
+}
+
+service StatusService {
+  rpc Health(HealthRequest) returns (HealthResponse) {
+    option (google.api.http) = {
+      get: "/v1/health"
+    };
+  }
+  rpc Needs(NeedsRequest) returns (NeedsResponse) {
+    option (google.api.http) = {
+      get: "/v1/needstatus"
+    };
+  }
+} 
+
+message Uuid {
+  string value = 1 ;
+}
+
+message Jwt {
+  string value = 1 ;
+}
+
+message Location {
+  Common common = 1;
+  double latitude = 2 ;
+  double longitude = 3 ;
+  double velocity = 4 ;
+  double course = 5 ;
+  double accuracy = 6 ;
+  Point point = 7 ;
+}
+
+message Power {
+  Common common = 1 ;
+  bool charging = 2 ;
+  uint32 battery_level = 3 ;
+}
+
+message Wifi {
+  string mac = 1 ;
+  string ssid = 2 ;
+  int32 rssi = 3 ;
+
+  enum WifiMode {
+    UNKNOWN = 0;
+    ADHOC = 1;
+    INFRASTRUCTURE = 2;
+  }
+  WifiMode mode = 4 ; //used for filtering out of location determination.
+}
+
+message WifiData {
+  Common common = 1;
+  Wifi wifi = 2 ;
+}
+
+message Beacon {
+  string uuid = 1 ;
+  int32 rssi = 2 ;
+  uint32 major = 3 ;
+  uint32 minor = 4 ;
+
+  enum Proximity {
+    UNKNOWN = 0;
+    FAR = 1;
+    NEAR = 2;
+    IMMEDIATE = 3;
+  }
+  Proximity proximity = 5 ;
+  float accuracy = 6 ;
+}
+
+message BeaconData {
+  Common common = 1 ; 
+  Beacon beacon = 2 ;
+}
+
+message Push {
+  string token = 1 ;
+  bool enable = 2 ;
+  
+  enum PushType {
+    UNKNOWN = 0 ;
+    ANDROID_C2DM = 1 ;
+    ANDROID_GCM = 2 ;
+    IOS_PRODUCTION = 3 ;
+    IOS_SANDBOX = 4 ;
+    WINDOWS_PHONE = 5 ;
+  }
+  PushType type = 3 ;
+}
+
+// first contact from child to parent via this:
+message Entity {
+	string id = 1 ;
+	string kind = 2 ;
+	string address = 3 ;
+	int64 port = 4 ;
+	Jwt jwt = 5 ;   // JWT might contain both the device UUID and the user info...
+	Location location = 6 ;
+  repeated GeoAffinity geo_affinities = 7 ;
+  google.protobuf.Timestamp first_seen = 8 ;
+  google.protobuf.Timestamp last_seen = 9 ;
+}
+
+message Hello {
+  Entity caller_entity = 1 ;
+  Entity called_entity = 2 ;
+  Location location = 3 ;
+}
+message Goto {
+	int32 code = 1 ;
+	string message = 2 ;
+	string id = 3 ;  // entity ?
+	string kind = 4 ;
+	string address = 5 ;
+	int64 port = 6 ;
+	Jwt jwt = 7 ;
+  repeated GeoAffinity geo_affinities = 8 ;
+}
+
+service InitialContactService {
+	rpc InitialContact(Hello) returns (Goto) {
+		option (google.api.http) = {
+			post: "/v1/hello"
+			body: "*"
+		};
+	}
+}
+
+
+message Common {
+  string entityId = 1;
+  google.protobuf.Timestamp timestamp = 2;
+}
+
+message Generic {
+	Common common = 1;
+	string measurement = 2;
+	map<string, string> tags = 3;
+	map<string, int64> fields_int64 = 4;
+	map<string, double> fields_double = 5;
+	map<string, float> fields_float = 6;
+	map<string, bytes> fields_bytes = 7;
+}
+
+message Error {
+	Common common = 1 ;
+	string error = 2 ;
+}
+
+message Audit {
+	Common common = 1 ;
+	string audit = 2 ;
+}
+
+message Subscription {
+	Common common = 1 ;
+	string subscription = 2 ;
+}
+
+message HeartBeat {
+	Common common = 1 ;
+	uint64 counter = 2 ;
+}
+
+
+// plugin stuff
+message UpdateDetails {
+  int32 operationType = 1;
+}
+
+
+message Event {
+  string eventId    = 1;
+  repeated Rectangle mbrLandmark = 2;
+  bytes pluginData = 3;
+}
+
+message WifiLmk {
+  string mac  = 1;
+  string ssid = 2;
+  sint32 rssiLow  = 3;
+  sint32 rssiHigh = 4;
+  int32  radioType = 5;
+}
+
+message IBeacon {
+  int32 radioType = 1;
+  string uuid   = 2;
+  int32 major = 3;
+  int32 minor = 4;
+  int32 proximity = 5;
+}
+
+message Landmark {
+  string poiId    = 1;
+  Rectangle mbrLandmark = 2;
+  bytes pluginData = 3;
+}
+
+// DeviceEvent represents an event signficant enought to report to nodes upstream.
+message DeviceEvent{
+    // EventType is the type of event experienced by the device.
+    enum EventType{
+        LOCATION_PERMISSION_DENIED = 0 ;
+        BLUETOOTH_PERMISSION_DENIED = 1 ;
+        PUSH_NOTIFICATIONS_DISABLED = 2 ;
+        LOW_POWER = 3 ;
+    }
+    EventType type = 1 ;
+    // additional contextual information related to the event
+    string message = 2;
+    // timestamp that the event occured (device time)
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+// DeviceConfig holds variables that controll device functionality.
+message DeviceConfig {
+    // number of milliseconds between location updates
+    int64 location_update_cadence = 1;
+    // number of milliseconds between location polling
+    int64 landmark_poll_cadence = 2;
+    // number of milliseconds between device configuration polling
+    int64 device_configuration_poll_cadence = 3;
+}
+
+// DeviceInfo describes a device creating sensor data.
+message DeviceInfo {
+    // platform / os of the device (ios, android, etc)
+    string platform = 1 ;
+    // os version of the platform (7.0, 10.1.1, etc)
+    string os_version = 2 ;
+    // globally unique identifier generated on install
+    string guid = 3 ;
+    // make / model of the device
+    string model = 4 ;
+    // timestamp of when the device info is gathered (device time)
+    google.protobuf.Timestamp timestamp = 5 ;
+}
+
+// LandmarksResponse is an array of landmarks for the GetLandmarks rpc call
+message LandmarksResponse {
+    repeated Landmark landmarks = 1;
+}
+
+// DeviceActivity is the type of user activity that is detected by Android / iOS
+message DeviceActivity {
+    // Type of activity
+    enum Type {
+      // Unable to detect the current activity.
+      UNKNOWN = 0 ;
+      // The device is still (not moving).
+      STILL = 1 ;
+      // The device is on a user who is walking.
+      WALKING = 2 ;
+      // The device is on a user who is running.
+      RUNNING = 3 ;
+      // The device is in a vehicle, such as a car.
+      IN_VEHICLE = 4 ;
+      // The device is on a bicycle.
+      ON_BICYCLE = 5 ;
+    }
+    // Level of confidence
+    enum ConfidenceLevel {
+      // The device is still (not moving).
+      LOW = 0;
+      // The device is on a user who is walking.
+      MEDIUM = 1;
+      // The device is on a user who is running.
+      HIGH = 2;
+    }
+    // type of activity
+    Type type = 1 ;
+    // confidence level with platform specific data types 
+    oneof confidence_oneof {
+       // confidence level (given on iOS)
+      ConfidenceLevel confidence_level = 2;
+      // confidence as percentage (given on Android)
+      int32 confidence_pct = 3; 
+    }
+    // timestamp of when the activity is detected (device time)
+    google.protobuf.Timestamp timestamp = 4; 
+}
+
+// DevicePluginService defines RPC calls required by device plugins
+service DevicePluginService {
+    // GetLandmarks returns landmarks allowing native sensors to whitelist wifis, beacons, and geofences
+    // (currently required for BLE on iOS)
+    rpc GetLandmarks(google.protobuf.Empty) returns (LandmarksResponse) {}
+    // GetDeviceConfig allows device plugins to request an up to date device config
+    rpc GetDeviceConfig(google.protobuf.Empty) returns (DeviceConfig) {}
+}
+
+message SGMS {
+  HeartBeat heart_beat = 1 ;
+  repeated Generic generic = 2 ;
+  repeated Error error = 3 ;
+  repeated Audit audit = 4 ;
+  repeated Subscription subscription = 5 ;
+  repeated Location location = 6 ;
+  repeated WifiData wifi = 7 ;
+  repeated BeaconData beacon = 8 ;
+  repeated Power power = 9 ;
+  Push push = 10 ;
+  Event event = 11;
+  Landmark landmark = 12;
+  DeviceConfig device_config = 13 ;
+  repeated DeviceInfo device_info = 14 ;
+  repeated DeviceEvent device_event = 15 ;
+  repeated DeviceActivity device_activities = 16 ;
+}
+
+service SGMSService {
+  rpc SendSGMS(SGMS) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/sgms"
+      body: "*"
+    };
+  }
+  rpc StreamSGMS(stream SGMS) returns (stream SGMS) {}
+}

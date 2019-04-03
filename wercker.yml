@@ -1,0 +1,39 @@
+
+box: golang
+
+dev:
+  steps:
+    - internal/watch:
+        code: |
+          go build ./...
+        reload: true
+
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - install-packages:
+        packages: unzip
+
+    - script:
+        name: fetchdeps
+        code: |
+          make
+
+    - script:
+        name: build
+        code: |
+          cd ${WERCKER_ROOT}/switch
+          make 
+
+    - script:
+        name: make clean
+        code: |
+          cd ${WERCKER_ROOT}
+          make clean
+
+  after-steps:
+      - slack-notifier:
+          url: $SLACK_URL
+          username: wercker
+          #branch: master

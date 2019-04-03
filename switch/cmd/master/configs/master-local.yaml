@@ -1,0 +1,9 @@
+log-level: "debug"
+
+influxdb-host: http://influxdb_master1:8086
+influxdb-dbname: sgms
+influxdb-user: sgms
+influxdb-password:  local
+
+service-area: service.geojson
+slave-geoaffinities-file: configs/master/static-geo-test.geojson

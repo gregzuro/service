@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# for destroy-others, there must be a triton profile with a name that matches the profile used as the root of the ver-file name
+# this profile must, of course, match - account-wise - the one specified in the var-file
+
+class=$1
+shift
+style=$1
+shift
+profile=$1
+shift
+tfcommand=$1
+shift
+tfargs=$@
+
+cd $class/$style
+
+case $tfcommand in
+    taint)
+        terraform taint -state=../$profile.tfstate $tfargs
+        ;;
+
+    destroy)
+        terraform destroy $tfargs -var-file="../$profile.tfvars" -var-file=local.tfvars -var home=$HOME -state=../$profile.tfstate 
+        # NB that terraform returns 0 if you type something other than 'yes' to its confirmation, 
+        # this means that the terraform destroy step *NOT NOT* have been done at this point...
+        ;;
+
+    destroy-others)
+        # destroy slaves and devices here 'cause terraform doens't know about them
+        triton -p $profile instance delete $(triton -p $profile instance list name=slave -o name -H | sed  'N;s/\n/ /')
+        triton -p $profile instance delete $(triton -p $profile instance list name=device -o name -H | sed  'N;s/\n/ /')
+        ;;
+
+    *)
+        terraform $tfcommand $tfargs -var-file="../$profile.tfvars" -var-file=local.tfvars -var home=$HOME -state=../$profile.tfstate 
+esac

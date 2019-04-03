@@ -1,0 +1,62 @@
+package: github.com/gregzuro/service
+excludeDirs:
+- var
+import:
+- package: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+  subpackages:
+  - proto
+  - ptypes/empty
+  - ptypes/timestamp
+  - proto-gen-go
+- package: github.com/influxdata/influxdb
+  version: ~1.0.0-beta3
+  subpackages:
+  - client
+- package: github.com/kubernetes/kubernetes
+  version: ~1.4.0-alpha.2
+  subpackages:
+  - pkg/ui/data/swagger
+- package: github.com/philips/go-bindata-assetfs
+  version: 3dcc96556217539f50599357fb481ac0dc7439b9
+- package: github.com/spf13/cobra
+  version: 1238ba19d24b0b9ceee2094e1cb31947d45c3e86
+- package: github.com/spf13/viper
+  version: c1ccc378a054ea8d4e38d8c67f6938d4760b53dd
+- package: github.com/tidwall/tile38
+  version: ~1.3.0
+  subpackages:
+  - controller/log
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/grpc
+  repo:    https://github.com/gregzuro/grpc-go
+  version: fix_issue1111_panic_on_stream_disconnect
+- package: github.com/akhenakh/regionagogo
+  version: 1040c33f0e2d88ec8e9381e27e4ec0f37b0ad9c8
+- package: github.com/Sirupsen/logrus
+  version: ~0.10.0
+- package: github.com/grpc-ecosystem/grpc-gateway
+  version: ~1.1.0
+- package: github.com/golang/glog
+  version: 44145f04b68cf362d9c4df2182967c2275eaefed
+- package: github.com/jteeuwen/go-bindata
+  version: ~3.0.7
+- package: github.com/docker/engine-api
+  version: 94a8f8f29307ab291abad6c6f2182d67089aae5d
+- package: github.com/peterh/liner
+  version: 8975875355a81d612fafb9f5a6037bdcc2d9b073
+- package: golang.org/x/crypto
+  subpackages:
+  - ssh
+- package: golang.org/x/mobile
+  subpackages:
+  - cmb/gomobile
+- package: github.com/paulmach/go.geojson
+  version: ^1.3.0
+- package: github.com/tidwall/rtree
+- package: github.com/Workiva/go-datastructures
+  version: ^1.0.32
+- package: gopkg.in/gomail.v2
+  version: ^2.0.0

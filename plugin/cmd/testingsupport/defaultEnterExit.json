@@ -1,0 +1,166 @@
+
+{ "branches":[ {
+  "branch": 3,
+  "decisions": [
+    {
+      "Inbranch": 3,
+      "Sequence": 1,
+      "trueBranch": 1,
+      "expression": "state",
+      "Operation": "==",
+      "Value": "OutOfArea"
+    },
+    {
+      "Inbranch": 3,
+      "Sequence": 2,
+      "trueBranch": 2,
+      "expression": "state",
+      "Operation": "==",
+      "Value": "InArea"
+    },
+    {
+      "Inbranch": 3,
+      "Sequence": 3,
+      "trueBranch": 9,
+      "expression": "state",
+      "Operation": "==",
+      "Value": "EnterArea"
+    },
+    {
+      "Inbranch": 3,
+      "Sequence": 4,
+      "trueBranch": 8,
+      "expression": "state",
+      "Operation": "==",
+      "Value": "ExitArea"
+    }
+  ],
+  "branches": [
+    {
+      "branch": 1,
+      "decisions": [
+        {
+          "Inbranch": 1,
+          "Sequence": 5,
+          "trueBranch": 4,
+          "expression": "SlideingWindowGPSInArea(gc,5)==3 ||  SlideingWindowWifiInArea(gc,5)==3 || SlideingWindowIBeaconInArea(gc,5)==3",
+          "Operation": "==",
+          "Value": "true"
+        },
+        {
+          "Inbranch": 1,
+          "Sequence": 6,
+          "trueBranch": 6,
+          "expression": "SlideingWindowGPSInArea(gc,5)==3 ||  SlideingWindowWifiInArea(gc,5)==3 || SlideingWindowIBeaconInArea(gc,5)==3",
+          "Operation": "==",
+          "Value": "false"
+        }
+      ],
+      "branches": [
+        {
+          "branch": 4,
+          "result": "ChangeState(gc,'EnterArea')"
+        },
+        {
+          "branch": 6,
+          "result": "NoAction()"
+        }
+      ]
+    },
+    {
+      "branch": 2,
+      "decisions": [
+        {
+          "Inbranch": 2,
+          "Sequence": 7,
+          "trueBranch": 5,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 &&  SlideingWindowWifiInArea(gc,5)==0 && SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "true"
+        },
+        {
+          "Inbranch": 2,
+          "Sequence": 8,
+          "trueBranch": 7,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 &&  SlideingWindowWifiInArea(gc,5)==0 && SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "false"
+        }
+      ],
+      "branches": [
+        {
+          "branch": 5,
+          "result": "ChangeState(gc,'ExitArea')"
+        },
+        {
+          "branch": 7,
+          "result": "ChangeState(gc,'InArea')"
+        }
+      ]
+    },
+    {
+      "branch": 9,
+      "decisions": [
+        {
+          "Inbranch": 9,
+          "Sequence": 9,
+          "trueBranch": 11,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 ||  SlideingWindowWifiInArea(gc,5)==0 || SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "true"
+        },
+        {
+          "Inbranch": 9,
+          "Sequence": 10,
+          "trueBranch": 10,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 ||  SlideingWindowWifiInArea(gc,5)==0 || SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "false"
+        }
+      ],
+      "branches": [
+        {
+          "branch": 11,
+          "result": "ChangeState(gc,'ExitArea')"
+        },
+        {
+          "branch": 10,
+          "result": "ChangeState(gc,'InArea')"
+        }
+      ]
+    },
+    {
+      "branch": 8,
+      "decisions": [
+        {
+          "Inbranch": 8,
+          "Sequence": 11,
+          "trueBranch": 12,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 &&  SlideingWindowWifiInArea(gc,5)==0 && SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "true"
+        },
+        {
+          "Inbranch": 8,
+          "Sequence": 12,
+          "trueBranch": 13,
+          "expression": "SlideingWindowGPSInArea(gc,5)==0 &&  SlideingWindowWifiInArea(gc,5)==0 && SlideingWindowIBeaconInArea(gc,5)==0",
+          "Operation": "==",
+          "Value": "false"
+        }
+      ],
+      "branches": [
+        {
+          "branch": 12,
+          "result": "ChangeState(gc,'OutOfArea')"
+        },
+        {
+          "branch": 13,
+          "result": "ChangeState(gc,'InArea')"
+        }
+      ]
+    }
+  ]
+}
+] 
+}

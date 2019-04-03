@@ -1,0 +1,22 @@
+language: go
+os:
+  - linux
+env:
+  - GIMME_GO_VERSION=1.7.3
+before_install:
+  - curl -sL https://raw.githubusercontent.com/travis-ci/gimme/master/gimme | bash
+  - source $HOME/.gimme/envs/go$GIMME_GO_VERSION.env
+script:
+  - make
+  - make -C ./switch
+cache:
+  directories:
+  - vendor
+  - .gopath/bin
+  - .gopath/pkg
+  # this would speed up glide install when glide.lock changes
+  # - $HOME/.glide/cache
+  - include
+  # - sdk/.androidhome
+notifications:
+  - slack: sgill:PA4gjqpyUmIpzG73RTUXVaA8

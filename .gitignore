@@ -1,0 +1,74 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+_obj
+_test
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+*.exe
+*.test
+*.prof
+
+manifest.json
+
+/switch/protobuf/*.pb.*
+/switch/protobuf/*.swagger.json
+/switch/pkg/ui/data/swagger/datafile.go
+
+/switch/build/linux_amd64/*
+/vendor
+/.gopath/pkg
+/.gopath/bin
+/.gopath/src/github.com/Masterminds/glide
+/include/google/protobuf
+/sdk/.androidhome
+
+# in case an executable is made in the root directory
+/service
+
+_builds/
+_projects/
+_steps/
+_cache/
+
+tmp*
+
+#switch/cmd/pip/
+/var
+
+.wercker
+
+# elm-package generated files
+elm-stuff
+# elm-repl generated files
+repl-temp-*
+
+# VSCode config files
+.vscode/
+
+# gomobile generated files
+*.aar
+node_*
+
+# terraform
+*.tfstate
+*.tfstate.backup
+terraform/dev/secrets/*
+gregzuro-dev-*.json
+
+# vagrant
+.vagrant/

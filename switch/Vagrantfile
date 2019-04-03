@@ -1,0 +1,11 @@
+Vagrant.configure("2") do |config|
+  config.vm.provider "docker" do |d|
+    d.build_dir = "."
+    d.build_args = ["--build-arg=DEPLOY_ENV=local", "-t=gregzuro/switch/master", "-f=cmd/master/Dockerfile"]
+    d.create_args = ["-it", "--net=sgms", "--log-driver=fluentd", "--log-opt=tag=service.master"]
+    d.name = "sgms_master1"
+    d.ports = ["7467:7467"]
+    d.volumes = [ENV['PWD'] + "/ui:/srv/ui","/var/run/docker.sock:/var/run/docker.sock"]
+    d.cmd = ["./master run -l 7467 --short-name sgms_master1 --iga '[[-123.066,45.358],[-123.066,45.627],[-122.198,45.627],[-122.198,45.358]]' --ega '[[-133.066,45.358],[-133.066,45.627],[-132.198,45.627],[-132.198,45.358]]'"]
+  end
+end
